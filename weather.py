@@ -1,29 +1,23 @@
-import sys
 import requests
-from PyQt5.QtWidgets import QWidget, QLabel, QPushButton, QApplication, QLineEdit, QVBoxLayout
-from PyQt5.QtCore import Qt 
 
+city = input("Enter city name: ")
 
-class WeatherApp(QWidget):
-    def __init__(self):
-        super().__init__()
-        self.city_label = QLabel("Enter city name: ", self)
-        self.input_city = QLineEdit(self)
-        self.button = QPushButton("Confirm", self)
-        self.temprature = ...
+url = (
+    "https://api.openweathermap.org/data/2.5/weather?&appid=bbbb876ef25804a91d2cb9aa35496dd7&q="
+    + city
+)
 
-def main():
-    app = QApplication(sys.argv)
-    weather_app = WeatherApp()
-    weather_app.show()
-    sys.exit(app.exec_())
+try:
+    data = requests.get(url).json()
 
+    print(
+        f"{data["name"]}, {data["sys"]["country"]} \nWind Speed: {data["wind"]["speed"]}m/s\nWeather: {data["weather"][0]["description"]}\n"
+    )
 
+    print("__________________________________________\n")
+    print(
+        f"Temprature: {data["main"]['temp'] - 273.15:.2f}C\nFeels like: {data["main"]['feels_like'] - 273.15:.2f}C\nMinimum temprature: {data["main"]['temp_min'] - 273.15:.2f}C\nMaximum temprature: {data["main"]['temp_max'] - 273.15:.2f}C"
+    )
 
-
-
-
-
-
-if __name__ == "__main__":
-    main()
+except Exception as e:
+    print(f"City not found!  {e}")
