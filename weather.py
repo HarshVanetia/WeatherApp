@@ -3,7 +3,7 @@ import requests
 city = input("Enter city name: ")
 
 url = (
-    "https://api.openweathermap.org/data/2.5/weather?&appid=bbbb876ef25804a91d2cb9aa35496dd7&q="
+    "https://api.openweathermap.org/data/2.5/weather?&appid=[key]&q="
     + city
 )
 
